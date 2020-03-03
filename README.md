@@ -1,3 +1,3 @@
 # -
-## 力扣经典算法题
-### *<font color=blue>每天一到算法题</font>*
+力扣经典算法题<br/>
+*<font color=blue>每天一道算法题</font>*
