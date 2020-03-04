@@ -11,12 +11,6 @@ class Solution:
         fresh = {(i, j) for i in range(len(grid)) for j in range(len(grid[0])) if grid[i][j] == 1}
         # 存放新鲜的橘子被污染后的坐标:
         end = set()
-        # 在网格外层在加一层, 方式溢出错误
-        for i in grid:
-            i.insert(0, 0)
-            i.append(0)
-        grid.insert(0, [0 for _ in range(len(grid[0]))])
-        grid.append([0 for _ in range(len(grid[0]))])
         # 腐烂的橘子只能让上下左右的新鲜橘子腐烂:
         move = [(0, 1), (0, -1), (-1, 0), (1, 0)]   # 上下左右
         while fresh:
