@@ -1,4 +1,3 @@
-
 class Solution:
     def findKthLargest(self, nums, k):
         max_num = max(nums)
