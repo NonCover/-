@@ -12,22 +12,39 @@
 '''
 class Solution:
     def maxDistance(self, grid):
-        lands = [[i, j] for i in range(len(grid)) for j in range(len(grid[0])) if grid[i][j] == 1]
-        if len(lands) == 0 or len(lands) == len(grid) * len(grid[0]): return -1
-        ret = -1
-        while lands:
-            p = lands
-            lands = []
-            while p:
-                land = p.pop(0)
-                for x, y in [(1, 0), (-1, 0), (0, 1), (0, -1)]:
-                    if land[0] + x < 0 or land[0] + x == len(grid) or land[1] + y < 0 or land[1] + y == len(grid[0]) or grid[land[0] + x][land[1] + y] != 0:
-                        continue
-                    else:
-                        grid[land[0] + x][land[1] + y] = -1
-                        lands.append([land[0] + x, land[1] + y])
-            ret += 1
-        return ret
+        # lands = [[i, j] for i in range(len(grid)) for j in range(len(grid[0])) if grid[i][j] == 1]
+        # if len(lands) == 0 or len(lands) == len(grid) * len(grid[0]): return -1
+        # ret = -1
+        # while lands:
+        #     p = lands
+        #     lands = []
+        #     while p:
+        #         land = p.pop(0)
+        #         for x, y in [(1, 0), (-1, 0), (0, 1), (0, -1)]:
+        #             if land[0] + x < 0 or land[0] + x == len(grid) or land[1] + y < 0 or land[1] + y == len(grid[0]) or grid[land[0] + x][land[1] + y] != 0:
+        #                 continue
+        #             else:
+        #                 grid[land[0] + x][land[1] + y] = -1
+        #                 lands.append([land[0] + x, land[1] + y])
+        #     ret += 1
+        # return ret
+        m, n = len(grid), len(grid[0])
+        queue = [(i, j) for i in range(m) for j in range(n) if grid[i][j] == 1]
+        if len(queue) == 0 or len(queue) == m * n: return -1
+        ans = 0
+        while queue:
+            q = queue
+            nextQueue = []  # 保存下一层的节点
+            while q:
+                i, j = q.pop(0)
+                for ni, nj in [(i - 1, j), (i + 1, j), (i, j - 1), (i, j + 1)]:
+                    if 0 <= ni < m and 0 <= nj < n and grid[ni][nj] != -1 and grid[ni][nj] != 1:
+                        # ans += 1
+                        grid[ni][nj] = -1
+                        nextQueue.append((ni, nj))
+            queue = nextQueue
+            ans += 1
+        return ans
 
 if __name__ == '__main__':
     grid = [[1,0,1],[0,0,0],[1,0,1]]
