@@ -11,15 +11,29 @@
 输出: false
 解释: 无论怎样，你总会到达索引为 3 的位置。但该位置的最大跳跃长度是 0 ， 所以你永远不可能到达最后一个位置。
 '''
+
+'''
+今天打卡遇到以前做过得题了，发现以前写的代码惨不忍睹，今天重写了一遍。并整理一下思路。
+这种题一半都是用贪心来做，但我们要找到贪心策略。先来解释一下变量含义
+K 代表当前所能到达得最大位置 初始值为 0，然后我们就需要来维护这个K所能到达得最大位置。
+K = i + nums[i] 就是刷新公式。然后贪心策略就找到了。
+在观察如下代码，其实我们可以进行常数优化，当 当前位置 i > K 得时候说明当前位置大于所能到达得最大位置，
+我们可以直接返回。不用再进行循环。
+时间复杂度：O（N）
+空间复杂度：O（1）
+'''
 class Solition:
     def canJump(self, nums):
-        if nums[0] == 0 and len(nums) > 1: return False
-        if nums.count(0) == len(nums): return True
-        maxVal = 0      # 跳跃的最大步数位置
+        K = 0      # 跳跃的最大步数位置
+        '''
         for i in range(len(nums) - 1): 
-            if maxVal >= i and i + nums[i] > maxVal:    # 当maxVal小于该位置时，则代表当前的位置无法走到
-                maxVal = i + nums[i]    # 刷新跳跃的最大步数位置
-        return maxVal >= len(nums) - 1
-
+            if K >= i and i + nums[i] > K:    # 当maxVal小于该位置时，则代表当前的位置无法走到
+                K = i + nums[i]    # 刷新跳跃的最大步数位置
+        return K >= len(nums) - 1
+        '''
+        for i in range(len(nums) - 1):
+            if i > K: return False
+            K = max(K, i + nums[i])
+        return True
 s = Solition()
-print(s.canJump([1, 0, 1, 0]))
+print(s.canJump([1, 3, 0, 0]))
