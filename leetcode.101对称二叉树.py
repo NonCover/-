@@ -16,7 +16,7 @@
 说明:
 如果你可以运用递归和迭代两种方法解决这个问题，会很加分。
 '''
-class Root:
+class TreeNode:
     def __init__(self, x, left=None, right=None):
         self.x = x
         self.left = left
@@ -57,8 +57,34 @@ def Solution2(root):
         # print(queue)
     return True
 
+from typing import List
+def arr2tree(arr: List) -> TreeNode:
+    head = TreeNode(arr[0])
+    node_arr = [head]
+    node = head
+    front = 0
+    idx = 1
+    while idx < len(arr):
+        node = node_arr[front]
+        front += 1
+        item = arr[idx]
+        idx += 1
+        if item:
+            node.left = TreeNode(item)
+            node_arr.append(node.left)
+            if idx == len(arr):
+                break
+        item = arr[idx]
+        idx += 1
+        if item:
+            node.right = TreeNode(item)
+            node_arr.append(node.right)
+            if idx == len(arr):
+                break
+    return head
+
 if __name__ == "__main__":
-    tree = Root(1, Root(2, Root(3), Root(4)), Root(2, Root(4), Root(3)))
+    tree = arr2tree([1,2,2,3,4,4,3])
     # 二叉树创建
     print(Solution1(tree))
     print(Solution2(tree))
